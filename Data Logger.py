@@ -1,35 +1,35 @@
 # Autonomous Robot Car Data Logger
 
-import cv2
-import csv
-import pygame
-import os
-import time
-from picarx import Picarx
+import cv2     #OpenCV
+import csv     #File writing
+import pygame     #Bluetooth controller
+import os     #Directories
+import time     #Time
+from picarx import Picarx     #SunFounder control
 
 
-IMG_SIZE = 200Sorr
-FPS = 15
-LOG_DIR = "data"
+IMG_SIZE = 200     #Resolution
+FPS = 15     
+LOG_DIR = "data"     # Name of file where we store data
 IMG_DIR = os.path.join(LOG_DIR, "Images")
 CSV_PATH = os.path.join(LOG_DIR, "ThrottleAndSteering.CSV")
 
 
-MAX_STEER = 30.0
-MAX_SPEED = 50.0 # (0-100)
+MAX_STEER = 30.0     # 30 degrees
+MAX_SPEED = 50.0     # (0-100)
 
 STEER_AXIS = 0
-THROTTLE_AXIS = 1 # Both using left joystick
-STOP_BUTTON = 0 #Mapped to A key on Xbox
+THROTTLE_AXIS = 1     # Both using left joystick
+STOP_BUTTON = 0     #Mapped to A key on Xbox
 
 
 
 def get_controller_values(joystick):
 
-    pygame.event.pump()
+    pygame.event.pump()     # Get controller
 
-    rawSteer = joystick.get_axis(STEER_AXIS)
-    rawThrottle = -(joystick.get_axis(THROTTLE_AXIS))So
+    rawSteer = joystick.get_axis(STEER_AXIS)     # The left stick x axis
+    rawThrottle = -(joystick.get_axis(THROTTLE_AXIS))So    # Left stick y axis
 
     steering = float(rawSteer * MAX_STEER)
     throttle = float(rawThrottle * MAX_SPEED)
@@ -51,15 +51,15 @@ def main():
 
     px = Picarx()
 
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(0)     # Use the first camera
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, IMG_SIZE)
     cam.set(cv2.CAP_PROP_FRAME_HEIGHT, IMG_SIZE)
     cam.set(cv2.CAP_PROP_FPS, FPS)
 
     pygame.init()
-    pygame.joystick.init()
+    pygame.joystick.init()     # Initialise the controller
 
-    joystick = pygame.joystick.Joystick(0)
+    joystick = pygame.joystick.Joystick(0)     # Use the first controller
     joystick.init()
     print(joystick.get_name(), "connected")
     
@@ -74,29 +74,29 @@ def main():
                 break
 
 
-            steering, throttle = get_controller_values(joystick)
+            steering, throttle = get_controller_values(joystick)     #Get input
 
-            px.set_dir_servo_angle(steering)
-            px.forward(throttle)
+            px.set_dir_servo_angle(steering)     #Steer the car
+            px.forward(throttle)     # Drive the car
 
-            ret, frame = cam.read()
+            ret, frame = cam.read()     # Take a picture
             if not ret:
                 time.sleep(0.01)
                 continue
 
             frame_resized = cv2.resize(frame, (IMG_SIZE, IMG_SIZE))
 
-            timeStamp = time.time()
+            timeStamp = time.time()     # Get current time
 
             img_name = f"img_{int(timeStamp * 1000)}.png"
             img_path = os.path.join(IMG_DIR, img_name)
-            cv2.imwrite(img_path, frame_resized)
+            cv2.imwrite(img_path, frame_resized)     # Save the photo
 
-            csvWriter.writerow([timeStamp, img_name, steering, throttle])
+            csvWriter.writerow([timeStamp, img_name, steering, throttle])    # Save the telemetry
             csvFile.flush()
 
+            #time.sleep(1/FPS)    FPS already specified, only use if necessary
 
-            time.sleep(0.05)
 
 
     finally:
