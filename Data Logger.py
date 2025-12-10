@@ -74,7 +74,7 @@ def main():
                 break
 
 
-            steering, throttle = get_controller_values(joystick)     #Get input
+            steering, throttle = get_controller_values(joystick)     #Get input from controller
 
             px.set_dir_servo_angle(steering)     #Steer the car
             px.forward(throttle)     # Drive the car
@@ -95,7 +95,7 @@ def main():
             csvWriter.writerow([timeStamp, img_name, steering, throttle])    # Save the telemetry
             csvFile.flush()
 
-            #time.sleep(1/FPS)    FPS already specified, only use if necessary
+            #time.sleep(1/FPS)    FPS already specified, only use if necessary. Does not account for processing time only stops program.
 
 
 
