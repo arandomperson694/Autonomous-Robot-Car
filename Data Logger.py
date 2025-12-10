@@ -18,8 +18,8 @@ CSV_PATH = os.path.join(LOG_DIR, "ThrottleAndSteering.CSV")
 MAX_STEER = 30.0     # 30 degrees
 MAX_SPEED = 50.0     # (0-100)
 
-STEER_AXIS = 0
-THROTTLE_AXIS = 1     # Both using left joystick
+STEER_AXIS = 3     # Right joystick left and right
+THROTTLE_AXIS = 1     #  Left joystick up and down
 STOP_BUTTON = 0     #Mapped to A key on Xbox
 
 
@@ -29,7 +29,7 @@ def get_controller_values(joystick):
     pygame.event.pump()     # Get controller
 
     rawSteer = joystick.get_axis(STEER_AXIS)     # The left stick x axis
-    rawThrottle = -(joystick.get_axis(THROTTLE_AXIS))So    # Left stick y axis
+    rawThrottle = -(joystick.get_axis(THROTTLE_AXIS))     # Left stick y axis
 
     steering = float(rawSteer * MAX_STEER)
     throttle = float(rawThrottle * MAX_SPEED)
