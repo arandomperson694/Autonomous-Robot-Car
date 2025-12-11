@@ -1,0 +1,28 @@
+#Model creator - TensorFlow t
+
+
+# Import libraries
+
+
+
+
+# Open CSV file and load image folder
+
+
+
+# Split 80% for training, 20% for validation data
+
+
+
+
+# Loop - feed image and telemetry into TensorFlow model for each csv line (model.fit)
+
+
+
+
+
+# Finish modelling it and put validation data back into model to test accuracy
+
+
+
+# Convert the model to TFLite (model.tflite)
