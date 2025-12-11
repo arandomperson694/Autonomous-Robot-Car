@@ -3,6 +3,7 @@
 
 # Import libraries
 
+import tensorflow
 
 
 
@@ -20,9 +21,8 @@
 
 
 
-
 # Finish modelling it and put validation data back into model to test accuracy
 
 
 
-# Convert the model to TFLite (model.tflite)
+# Convert the model to TFLite (model.tflite) and save as a file
