@@ -26,12 +26,14 @@ with open(CSV_PATH, "r") as file:
 
 
   # Loop - feed image and telemetry into TensorFlow model for each csv line (model.fit)
+
+  next(telemetry)      # Skip header row
   
   for row in telemetry:
-
+    
     imageName = row[1]
-    steering = row[2]
-    throttle = row[3]
+    steering = float(row[2])
+    throttle = float(row[3])
 
     
     image = cv2.imread(imageName) # image = cv2.imread(imageName, 0) for greyscale
