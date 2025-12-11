@@ -1,4 +1,4 @@
-#Model creator - TensorFlow t
+#Model creator - TensorFlow
 
 
 # Import libraries
