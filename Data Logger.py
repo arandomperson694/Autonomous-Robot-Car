@@ -18,6 +18,8 @@ CSV_PATH = os.path.join(LOG_DIR, "ThrottleAndSteering.CSV")
 MAX_STEER = 30.0     # 30 degrees
 MAX_SPEED = 50.0     # (0-100)
 
+CAM_TILT_ANGLE = -10
+
 STEER_AXIS = 3     # Right joystick left and right
 THROTTLE_AXIS = 1     #  Left joystick up and down
 STOP_BUTTON = 0     #Mapped to A key on Xbox
@@ -50,6 +52,8 @@ def main():
 
 
     px = Picarx()
+
+    px.set_cam_tilt_angle(CAM_TILT_ANGLE)     # Looking down at the road
 
     cam = cv2.VideoCapture(0)     # Use the first camera
     cam.set(cv2.CAP_PROP_FRAME_WIDTH, IMG_SIZE)
